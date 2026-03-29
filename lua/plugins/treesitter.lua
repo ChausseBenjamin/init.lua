@@ -23,10 +23,22 @@ parser_config.pest = {
 	filetype = "pest",
 }
 
--- Add filetype detection for .pest files
+-- Add custom parser for Go templates
+parser_config.gotmpl = {
+	install_info = {
+		url = "https://github.com/ngalaiko/tree-sitter-go-template",
+		files = { "src/parser.c" },
+		branch = "master",
+		generate_requires_npm = false,
+	},
+	filetype = "gotmpl",
+}
+
+-- Add filetype detection for template files
 vim.filetype.add({
 	extension = {
 		pest = 'pest',
+		tmpl = 'gotmpl',
 	},
 })
 
@@ -38,6 +50,7 @@ configs.setup({
 		'c',
 		'diff',
 		'go',
+		'gotmpl',
 		'graphql',
 		'javascript',
 		'json',
@@ -105,6 +118,17 @@ configs.setup({
 		},
 	},
 })
+
+-- Add custom directive for filename-based injection
+vim.treesitter.query.add_directive("inject-by-filename!", function(_, _, bufnr, _, metadata)
+	local fname = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
+	-- Match pattern like "file.ext.tmpl" and extract "ext"
+	local ext = fname:match("%.(%w+)%.tmpl$")
+	if ext then
+		metadata["injection.language"] = ext
+		metadata["injection.combined"] = true
+	end
+end, {})
 
 -- Add predicate for mise file detection
 require('vim.treesitter.query').add_predicate('is-mise?',

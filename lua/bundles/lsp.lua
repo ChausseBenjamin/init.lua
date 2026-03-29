@@ -19,23 +19,29 @@ vim.lsp.enable({
 	'bashls',
 	'ruff',
 	'zls',
+	'ty',
 	'tinymist',
+	'texlab',
 	-- No 'rust_analyzer' as it's handled by rustaceanvim
 })
 
--- Use nvim-lspconfig for texlab to get commands like :TexlabBuild
-require('lspconfig').texlab.setup({
+-- Use new vim.lsp.config API for texlab
+vim.lsp.config('texlab', {
 	settings = {
 		texlab = {
 			build = {
 				executable = 'pdflatex',
 				args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
-				onSave = true, -- Set to true for auto-build on save
+				onSave = true,
 				forwardSearchAfter = false,
 			},
 			chktex = {
-				onOpenAndSave = true, -- Enable linting
+				onOpenAndSave = true,
 				onEdit = false,
+			},
+			forwardSearch = {
+				executable = 'zathura-nofocus',
+				args = { '--synctex-forward', '%l:1:%f', '%p' },
 			},
 		},
 	},
@@ -101,6 +107,64 @@ vim.lsp.config('lua_ls', {
 	}
 })
 
+-- Helper function to auto-install and start LSP tools from uv projects
+local function uv_lsp_cmd(tool_name, args)
+	return function(dispatchers, config)
+		local root_dir = config.root_dir
+		if root_dir then
+			local venv_tool = root_dir .. '/.venv/bin/' .. tool_name
+			local pyproject = root_dir .. '/pyproject.toml'
+
+			-- If pyproject.toml exists but tool is not installed, install it
+			if vim.fn.filereadable(pyproject) == 1 and vim.fn.executable(venv_tool) == 0 then
+				vim.notify(
+				string.format('Auto-installing %s via uv add --dev...', tool_name),
+					vim.log.levels.INFO)
+				local result = vim.fn.system(string.format(
+					'cd %s && uv add --dev %s 2>&1',
+					vim.fn.shellescape(root_dir), tool_name))
+				if vim.v.shell_error ~= 0 then
+					vim.notify(
+					string.format('Failed to install %s: %s', tool_name, result),
+						vim.log.levels.ERROR)
+					error(string.format('%s installation failed', tool_name))
+				else
+					vim.notify(string.format('%s installed successfully', tool_name),
+						vim.log.levels.INFO)
+				end
+			end
+
+			-- Now check if tool is available in venv
+			if vim.fn.executable(venv_tool) == 1 then
+				local cmd = vim.list_extend({ venv_tool }, args or {})
+				return vim.lsp.rpc.start(cmd, dispatchers, { cwd = root_dir })
+			end
+		end
+
+		-- Fall back to global tool if available
+		if vim.fn.executable(tool_name) == 1 then
+			local cmd = vim.list_extend({ tool_name }, args or {})
+			return vim.lsp.rpc.start(cmd, dispatchers, { cwd = root_dir })
+		end
+
+		-- If no tool found anywhere, notify and don't start server
+		vim.notify(
+		string.format('%s not found. Install with: uv add --dev %s', tool_name,
+			tool_name), vim.log.levels.WARN)
+		error(string.format('%s not found', tool_name))
+	end
+end
+
+-- Configure ruff to follow 80 column limit and use uv environment if available
+vim.lsp.config('ruff', {
+	cmd = uv_lsp_cmd('ruff', { 'server' }),
+	init_options = {
+		settings = {
+			lineLength = 80,
+		}
+	}
+})
+
 -- Configure tinymist for PDF export on type
 vim.lsp.config('tinymist', {
 	settings = {
@@ -110,90 +174,11 @@ vim.lsp.config('tinymist', {
 	}
 })
 
--- Custom hover function to show images or LSP hover
-local function custom_hover()
-	-- Check if cursor is on a typst image path using line regex
-	local line = vim.fn.getline('.')
-	local col = vim.fn.col('.')
-	local image_path = nil
+-- Configure ty to use uv environment if available
+vim.lsp.config('ty', {
+	cmd = uv_lsp_cmd('ty', { 'server' }),
+})
 
-	-- Match #image("path") or image("path")
-	local pattern = '#?image%("([^"]+)"'
-	local start, end_pos, path = line:find(pattern)
-	if start and col >= start and col <= end_pos then
-		image_path = path
-	end
-
-	if not image_path then
-		vim.lsp.buf.hover()
-		return
-	end
-
-	-- Resolve path relative to current file
-	local file_dir = vim.fn.expand('%:p:h')
-	local full_path = file_dir .. '/' .. image_path
-	if not vim.fn.filereadable(full_path) then
-		print('not readable, calling hover')
-		vim.lsp.buf.hover()
-		return
-	end
-
-	-- Create floating window popup for the image
-	local api = require('image')
-	local ok, image = pcall(api.from_file, full_path, {})
-	if not ok or not image then
-		vim.lsp.buf.hover()
-		return
-	end
-
-	local utils = require('image/utils')
-	local term_size = utils.term.get_size()
-	local width, height = utils.math.adjust_to_aspect_ratio(
-		term_size,
-		image.image_width,
-		image.image_height,
-		math.floor(term_size.screen_cols / 2),
-		0
-	)
-	local win_config = {
-		relative = "cursor",
-		row = 1,
-		col = 0,
-		width = width,
-		height = height,
-		style = "minimal",
-		border = "rounded",
-	}
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.bo[buf].filetype = "image_nvim_popup"
-	local win = vim.api.nvim_open_win(buf, false, win_config)
-
-	image.ignore_global_max_size = true
-	image.window = win
-	image.buffer = buf
-
-	vim.defer_fn(function()
-		if vim.api.nvim_win_is_valid(win) then
-			local win_info = vim.fn.getwininfo(win)[1]
-			if win_info and win_info.wincol > 0 then
-				image:render({
-					x = 0,
-					y = 0,
-					width = width,
-					height = height,
-				})
-			end
-		end
-	end, 10)
-
-	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-		callback = function()
-			if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
-			image:clear()
-		end,
-		once = true,
-	})
-end
 
 local lsp_keys = {
 	{
@@ -208,8 +193,8 @@ local lsp_keys = {
 	},
 	{
 		k = 'K',
-		f = custom_hover,
-		d = 'Show object description or image on hover',
+		f = vim.lsp.buf.hover,
+		d = 'Show object description on hover',
 	},
 	{
 		k = 'gd',
@@ -245,6 +230,19 @@ local lsp_keys = {
 		k = 'S',
 		f = vim.diagnostic.open_float,
 		d = 'View diagnostics information in a floating window',
+	},
+	{
+		k = '<leader>z',
+		f = function()
+			local tex_file = vim.fn.expand('%:p')
+			local pdf_file = vim.fn.fnamemodify(tex_file, ':r') .. '.pdf'
+			local line = vim.fn.line('.')
+			vim.fn.system(string.format(
+				'zathura --synctex-forward="%d:1:%s" "%s" &',
+				line, tex_file, pdf_file
+			))
+		end,
+		d = 'Forward search to PDF (Zathura)'
 	},
 }
 

@@ -12,3 +12,5 @@
 -- yadm uses bare git repos (harder to detect)
 require('plugins.fugitive')
 require('plugins.gitsigns')
+require('plugins.worktree')
+require('plugins.jujutsu')

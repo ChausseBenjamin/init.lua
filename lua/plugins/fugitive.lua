@@ -10,9 +10,8 @@
 vim.pack.add {
 	{ src = GH .. 'tpope/vim-fugitive' },
 	{ src = GH .. 'tpope/vim-rhubarb' },
+	{ src = GH .. 'ChausseBenjamin/yadm.nvim', version = 'fix-vim-validate' },
 }
-
-DevPack('rj1/yadm.nvim')
 
 require('yadm').setup({
 	yadm_dir = vim.fn.expand('$XDG_DATA_HOME/yadm/repo.git'),

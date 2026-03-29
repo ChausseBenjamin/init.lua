@@ -6,4 +6,4 @@
 --
 -- AI Assistant Bundle
 
-require('plugins.copilot')
+require('plugins.99')

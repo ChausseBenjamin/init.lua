@@ -54,10 +54,10 @@ vim.keymap.set('n', '<leader>mT', function()
 		if vim.api.nvim_buf_is_valid(buf) then
 			local name = vim.api.nvim_buf_get_name(buf)
 			-- Close buffers that are specifically cargo test terminals or test-related
-			if name:match("term://.*cargo test") or
-					name:match("rusttest") or
-					name:match("test%-output") or
-					(vim.bo[buf].buftype == "quickfix") then
+			if name:match('term://.*cargo test') or
+					name:match('rusttest') or
+					name:match('test%-output') or
+					(vim.bo[buf].buftype == 'quickfix') then
 				-- Only close if it's not the current buffer to avoid issues
 				if buf ~= vim.api.nvim_get_current_buf() then
 					vim.api.nvim_buf_delete(buf, { force = true })

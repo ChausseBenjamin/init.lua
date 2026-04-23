@@ -41,23 +41,27 @@ vim.keymap.set('x', '9i', function()
 	ninety.visual({ additional_prompt = 'Implement this' })
 end, { desc = '[99] Implement selection' })
 
+-- 9I operator: works with motions but prompts for custom instruction
+_G.__ninety_instruction = function(motion_type)
+	if motion_type == 'line' then
+		vim.cmd('normal! `[V`]')
+	else
+		vim.cmd('normal! `[v`]')
+	end
+
+	ninety.visual()
+end
+
+vim.keymap.set('n', '9I', function()
+	vim.go.operatorfunc = 'v:lua.__ninety_instruction'
+	return 'g@'
+end, { desc = '[99] Implement with instruction', expr = true })
+
+vim.keymap.set('x', '9I', function()
+	ninety.visual()
+end, { desc = '[99] Implement selection with instruction' })
+
 local ninety_keys = {
-	{
-		k = '<leader>9v',
-		f = function()
-			ninety.visual()
-		end,
-		d = '[99] Visual selection',
-		m = 'v',
-	},
-	{
-		k = '<leader>9i',
-		f = function()
-			ninety.visual({ additional_prompt = 'Implement this' })
-		end,
-		d = '[99] Implement selection',
-		m = 'v',
-	},
 	{
 		k = '<leader>9x',
 		f = function()

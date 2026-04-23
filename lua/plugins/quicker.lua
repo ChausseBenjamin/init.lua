@@ -13,32 +13,32 @@ vim.pack.add {
 
 local quicker = require('quicker')
 
-vim.keymap.set("n", "<leader>q", function()
+vim.keymap.set('n', '<leader>q', function()
 	quicker.toggle()
 end, {
-	desc = "Toggle quickfix",
+	desc = 'Toggle quickfix',
 })
-vim.keymap.set("n", "<leader>ll", function()
+vim.keymap.set('n', '<leader>ll', function()
 	quicker.toggle({ loclist = true })
 end, {
-	desc = "Toggle loclist",
+	desc = 'Toggle loclist',
 })
 
 quicker.setup({
 	keys = {
 		{
-			">",
+			'>',
 			function()
 				quicker.expand({ before = 2, after = 2, add_to_existing = true })
 			end,
-			desc = "Expand quickfix context",
+			desc = 'Expand quickfix context',
 		},
 		{
-			"<",
+			'<',
 			function()
 				quicker.collapse()
 			end,
-			desc = "Collapse quickfix context",
+			desc = 'Collapse quickfix context',
 		},
 	},
 })

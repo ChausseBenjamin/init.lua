@@ -12,14 +12,14 @@ local termpicker = require('termpicker')
 termpicker.setup({})
 
 -- Main Picker
-vim.keymap.set({ 'i', 'n', 'o', 'x' }, "<C-g>", function()
+vim.keymap.set({ 'i', 'n', 'o', 'x' }, '<C-g>', function()
 	termpicker.pick()
-end, { desc = "Pick color" })
+end, { desc = 'Pick color' })
 
 -- Picker into Yank Buffer
 vim.keymap.set('n', '<leader>cy', function()
 	require('termpicker').pick({ output = '"' })
-end, { desc = "Pick color to yank buffer" })
+end, { desc = 'Pick color to yank buffer' })
 
 -- Picker with dynamic preview text
 vim.keymap.set('x', '<leader>cp', function()
@@ -32,4 +32,4 @@ vim.keymap.set('x', '<leader>cp', function()
 		preview = { text = selected_text },
 		behaviour = { preserve_selection = true }
 	})
-end, { desc = "Pick color with selection as preview" })
+end, { desc = 'Pick color with selection as preview' })

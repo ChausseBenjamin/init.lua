@@ -13,4 +13,4 @@ vim.pack.add({
 -- Somehow vim.pack.add isn't enough for this one...
 vim.cmd('packadd markdown-preview.nvim')
 
-pcall(require, 'plugins.images')
+-- pcall(require, 'plugins.images')

@@ -14,5 +14,8 @@ vim.pack.add {
 
 require('plugins.images')
 
-require('typst-preview').setup({})
+require('typst-preview').setup({
+	invert_colors = '{"rest": "auto", "image": "never"}',
+	open_cmd = 'wl-surf %s'
+})
 require('typst-preview.commands').create_commands()

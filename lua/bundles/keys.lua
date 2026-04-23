@@ -41,6 +41,10 @@ vim.keymap.set(
 	{ desc = 'Yank to clipboard', noremap = true }
 )
 
+-- `^` to navigate to the first non-space character feels off...
+-- `gI` feels like "go to where I would go if I pressed `I` which is natural"
+vim.keymap.set({ 'n', 'v', 'x' }, 'gI', '^')
+
 -- Quick tab  and  buffer navigation
 local navkeys = {
 	{ '<Bslash>',   function() vim.cmd.tabnext() end,   'View next tab' },

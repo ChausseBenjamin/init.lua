@@ -7,71 +7,46 @@
 -- Sweet, sweet AST-based syntax
 
 vim.pack.add {
-	{ src = GH .. 'nvim-treesitter/nvim-treesitter' },
-	{ src = GH .. 'nvim-treesitter/nvim-treesitter-textobjects' }
+	{ src = GH .. 'nvim-treesitter/nvim-treesitter',             version = 'main' },
+	{ src = GH .. 'nvim-treesitter/nvim-treesitter-textobjects', version = 'main' }
 }
 
--- Add custom parser for Pest
-local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-parser_config.pest = {
-	install_info = {
-		url = "https://github.com/pest-parser/tree-sitter-pest",
-		files = { "src/parser.c" },
-		branch = "main",
-		generate_requires_npm = false,
-	},
-	filetype = "pest",
-}
-
--- Add custom parser for Go templates
-parser_config.gotmpl = {
-	install_info = {
-		url = "https://github.com/ngalaiko/tree-sitter-go-template",
-		files = { "src/parser.c" },
-		branch = "master",
-		generate_requires_npm = false,
-	},
-	filetype = "gotmpl",
-}
-
--- Add filetype detection for template files
-vim.filetype.add({
-	extension = {
-		pest = 'pest',
-		tmpl = 'gotmpl',
-	},
-})
+-- Patch vim.treesitter.get_node_text to fix nil node issues
+local original_get_node_text = vim.treesitter.get_node_text
+vim.treesitter.get_node_text = function(node, source, opts)
+	if not node then
+		return ''
+	end
+	-- Check if node has range method before calling get_node_text
+	local ok, result = pcall(function()
+		return node:range()
+	end)
+	if not ok then
+		return ''
+	end
+	return original_get_node_text(node, source, opts)
+end
 
 -- Base treesitter config
-local configs = require('nvim-treesitter.configs')
-configs.setup({
-	ensure_installed = {
-		'bash',
-		'c',
-		'diff',
-		'go',
-		'gotmpl',
-		'graphql',
-		'javascript',
-		'json',
-		'lua',
-		'markdown',
-		'markdown_inline',
-		'mermaid',
-		'python',
-		'rust',
-		'toml',
-		'typescript',
-		'typst',
-		'yaml',
-		'zig',
-	},
-	sync_install = false,
-	ignore_install = {},
-	auto_install = true,
-	modules = {},
+require('nvim-treesitter').setup({
 	highlight = { enable = true },
 	indent = { enable = false },
+	local_parsers = {
+		pest = {
+			source = {
+				type = 'self_contained',
+				url = 'https://github.com/pest-parser/tree-sitter-pest',
+			},
+			filetype = 'pest',
+		},
+		gotmpl = {
+			source = {
+				type = 'self_contained',
+				url = 'https://github.com/ngalaiko/tree-sitter-go-template',
+			},
+			filetype = 'gotmpl',
+		},
+	},
 	additional_vim_regex_highlighting = false,
 	textobjects = {
 		swap = {
@@ -119,27 +94,52 @@ configs.setup({
 	},
 })
 
+-- Add filetype detection for custom parsers
+vim.filetype.add({
+	extension = {
+		pest = 'pest',
+		tmpl = 'gotmpl',
+	},
+})
+
 -- Add custom directive for filename-based injection
-vim.treesitter.query.add_directive("inject-by-filename!", function(_, _, bufnr, _, metadata)
-	local fname = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
-	-- Match pattern like "file.ext.tmpl" and extract "ext"
-	local ext = fname:match("%.(%w+)%.tmpl$")
-	if ext then
-		metadata["injection.language"] = ext
-		metadata["injection.combined"] = true
-	end
-end, {})
+vim.treesitter.query.add_directive('inject-by-filename!',
+	function(_, _, bufnr, pred, metadata)
+		if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+			return
+		end
+		local ok, fname = pcall(vim.fs.basename, vim.api.nvim_buf_get_name(bufnr))
+		if not ok or not fname then
+			return
+		end
+		-- Match pattern like 'file.ext.tmpl' and extract "ext"
+		local ext = fname:match('%.(%w+)%.tmpl$')
+		if ext then
+			metadata['injection.language'] = ext
+			metadata['injection.combined'] = true
+		end
+	end, {})
 
 -- Add predicate for mise file detection
 require('vim.treesitter.query').add_predicate('is-mise?',
 	function(_, _, bufnr, _)
-		local filepath = vim.api.nvim_buf_get_name(tonumber(bufnr) or 0)
+		if not bufnr then
+			return false
+		end
+		local ok, filepath = pcall(vim.api.nvim_buf_get_name, tonumber(bufnr) or 0)
+		if not ok or not filepath or filepath == '' then
+			return false
+		end
 		local filename = vim.fn.fnamemodify(filepath, ':t')
 		return string.match(filename, '.*mise.*%.toml$') ~= nil
 	end, { force = true, all = false })
 
 -- Treesitter Text Objects (repeatable moves)
-local tsrm = require('nvim-treesitter.textobjects.repeatable_move')
+local ok_tsrm, tsrm = pcall(require,
+	'nvim-treesitter.textobjects.repeatable_move')
+if not ok_tsrm then
+	return
+end
 vim.keymap.set(
 	{ 'n', 'x', 'o' },
 	';',
@@ -150,7 +150,6 @@ vim.keymap.set(
 	',',
 	tsrm.repeat_last_move_previous
 )
--- Also use `;` and `,` with the default vim `f` and `F`
 vim.keymap.set(
 	{ 'n', 'x', 'o' },
 	'f',

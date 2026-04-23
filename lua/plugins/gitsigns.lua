@@ -15,7 +15,10 @@ vim.pack.add {
 
 local gs = require('gitsigns')
 gs.setup()
-local ts_repeat = require('nvim-treesitter.textobjects.repeatable_move')
+local ok_ts, ts_repeat = pcall(require, 'nvim-treesitter.textobjects.repeatable_move')
+if not ok_ts then
+	return
+end
 local function navopts()
 	return {
 		wrap = true,

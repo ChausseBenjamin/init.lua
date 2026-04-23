@@ -23,12 +23,12 @@ local nt = require('neotest')
 
 nt.setup({
 	-- projects = {
-	--  ["~/Workspace/plugins/raf"] = require("neotest-plenary")({
-	--    min_init = "./path/to/test_init.lua",
+	--  ['~/Workspace/plugins/raf'] = require('neotest-plenary')({
+	--    min_init = './path/to/test_init.lua',
 	--  }),
 	adapters = {
-		require("neotest-plenary"),
-		require("rustaceanvim.neotest"),
+		require('neotest-plenary'),
+		require('rustaceanvim.neotest'),
 	},
 })
 local keys = {

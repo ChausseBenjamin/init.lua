@@ -13,7 +13,6 @@ vim.pack.add {
 		src = GH .. 'nvim-telescope/telescope.nvim',
 		version = vim.version.range('0.1')
 	},
-	{ src = GH .. 'nvim-telescope/telescope-ui-select.nvim' },
 }
 
 local ts = require('telescope')
@@ -22,16 +21,16 @@ local tsb = require('telescope.builtin')
 ts.setup({
 	defaults = {
 		borderchars = {
-			prompt = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-			results = { " ", "│", " ", " ", " ", " ", " ", " " },
-			preview = { " " } -- Single line on top to separate from list
+			prompt = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+			results = { ' ', '│', ' ', ' ', ' ', ' ', ' ', ' ' },
+			preview = { ' ' } -- Single line on top to separate from list
 		},
 		color_devicons = true,
-		path_displays = { "smart" },
+		path_displays = { 'smart' },
 		layout_config = {
 			height = 400,
 			width = 400,
-			prompt_position = "bottom",
+			prompt_position = 'bottom',
 			preview_cutoff = 80,
 		}
 	},

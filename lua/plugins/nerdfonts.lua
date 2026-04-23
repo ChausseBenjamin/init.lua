@@ -17,11 +17,11 @@ require('telescope').load_extension('nerdy')
 local original_nerdy = require('telescope').extensions.nerdy.nerdy
 require('telescope').extensions.nerdy.nerdy = function(opts)
 	opts = vim.tbl_deep_extend('force', {
-		borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+		borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
 		layout_config = {
 			height = 100,
 			width = 400,
-			prompt_position = "bottom",
+			prompt_position = 'bottom',
 			preview_cutoff = 40,
 		},
 	}, opts or {})

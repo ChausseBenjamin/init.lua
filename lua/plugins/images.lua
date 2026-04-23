@@ -51,5 +51,5 @@ if ok then
 		hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif' }, -- render image files as images when opened
 	})
 else
-	print("Image.nvim failed to load:", image)
+	print('Image.nvim failed to load:', image)
 end

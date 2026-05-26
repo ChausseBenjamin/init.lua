@@ -35,6 +35,7 @@ require('mini.indentscope').setup({
 		animation = no_indent_anim(),
 	},
 })
+vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', { link = 'Folded' })
 
 -- Better 'A'round/'I'nner  + Custom treesitter mappings
 local gen_spec = require('mini.ai').gen_spec

@@ -1,5 +1,4 @@
--- Use new vim.lsp.config API for texlab
-vim.lsp.config('texlab', {
+return {
 	settings = {
 		texlab = {
 			build = {
@@ -19,4 +18,4 @@ vim.lsp.config('texlab', {
 			},
 		},
 	},
-})
+}

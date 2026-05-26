@@ -6,4 +6,4 @@
 --
 -- AI Assistant Bundle
 
-require('plugins.99')
+-- require('plugins.99')

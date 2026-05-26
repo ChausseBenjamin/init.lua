@@ -13,26 +13,24 @@ vim.pack.add {
 DevPack('mrcjkb/rustaceanvim')
 
 vim.lsp.enable({
-	'gopls',
-	'golangci_lint_ls',
-	'lua_ls',
-	'bashls',
-	'ruff',
-	'zls',
-	'ty',
-	'tinymist',
-	'texlab',
-	'jsonls',
-	-- 'arduino_language_server',
-	-- No 'rust_analyzer' as it's handled by rustaceanvim
+    'gopls',
+    'golangci_lint_ls',
+    'lua_ls',
+    'bashls',
+    'ruff',
+    'zls',
+    'ty',
+    'tinymist',
+    'texlab',
+    'jsonls',
+    -- 'arduino_language_server',
+    -- No 'rust_analyzer' as it's handled by rustaceanvim
 })
 
-require('bundles.lsp.arduino')
-require('bundles.lsp.latex')
-require('bundles.lsp.lua')
-require('bundles.lsp.python')
+-- The following LSP-specific configs were migrated to after/lsp/ so they
+-- are loaded by Neovim's LSP runtime after plugin defaults. Keep rust
+-- configuration here as it configures rustaceanvim (a plugin).
 require('bundles.lsp.rust')
-require('bundles.lsp.typst')
 
 -- Load more stuff now that the lsp is installed+configured
 require('plugins.blink')

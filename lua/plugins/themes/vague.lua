@@ -48,16 +48,39 @@ require('vague').setup({
 vim.cmd.colorscheme('vague')
 
 local plt = {
-	pale   = '#90a0b5',
-	blue   = '#405065',
-	green  = '#80a766',
-	yellow = '#f1bf81',
-	red    = '#d56380',
+	black   = '#1C1C24',
+	dark    = '#252530',
+	coral   = '#b4d4cf',
+	pale    = '#90a0b5',
+	blue    = '#405065',
+	lilac   = '#c3c3d5',
+	green   = '#80a766',
+	yellow  = '#e8b589',
+	red     = '#d56380',
+	magenta = '#b7416e'
 }
+-- Custom highlight tweaks
+local rules = {
+	['WinSeparator'] = { fg = plt.blue },
+	['hline.out'] = { bg = plt.dark, fg = plt.lilac },
+	['hline.in'] = { bg = plt.black, fg = plt.lilac },
 
--- Custom highlight tweaks to match codebase style
-vim.api.nvim_set_hl(0, 'Cursor', { fg = plt.pale })
-vim.api.nvim_set_hl(0, 'Visual', { bg = plt.blue })
-vim.api.nvim_set_hl(0, 'lualine_b_diff_added', { bg = plt.green })
-vim.api.nvim_set_hl(0, 'lualine_b_diff_modified', { bg = plt.yellow })
-vim.api.nvim_set_hl(0, 'lualine_b_diff_removed', { bg = plt.red })
+	['hline.out.mode'] = { fg = plt.black },
+	['hline.out.mode.norm'] = { bg = plt.pale, fg = plt.black },
+	['hline.out.mode.cmd'] = { link = 'hline.out.mode.norm' },
+	['hline.out.mode.insert'] = { bg = plt.yellow },
+	['hline.out.mode.replace'] = { link = 'hline.out.mode.insert' },
+	['hline.out.mode.vis'] = { bg = plt.coral },
+	['hline.out.mode.term'] = { bg = plt.magenta, fg = plt.lilac },
+	['hline.out.mode.sel'] = { link = 'hline.out.mode.term' },
+	['hline.out.mode.shell'] = { link = 'hline.out.mode.term' },
+
+	['hline.out.tabs.focused'] = { link = 'hline.out.mode.norm' },
+
+	['hline.diff.added'] = { fg = plt.green },
+	['hline.diff.modified'] = { fg = plt.yellow },
+	['hline.diff.deleted'] = { fg = plt.red },
+}
+for rule, opts in pairs(rules) do
+	vim.api.nvim_set_hl(0, rule, opts)
+end

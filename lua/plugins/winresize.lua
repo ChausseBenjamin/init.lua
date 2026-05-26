@@ -11,6 +11,6 @@ vim.pack.add {
 	{ src = GH .. 'simeji/winresizer' },
 }
 
-vim.g.winresizer_vert_resize = 13
+vim.g.winresizer_vert_resize = 7
 vim.g.winresizer_horiz_resize = 10
 vim.g.winresizer_start_key = '<leader><leader>w'

@@ -21,6 +21,12 @@ function DevPack(repo)
 	end
 end
 
+-- vim.api.nvim_create_user_command('Resess', function()
+-- 	local fn = '.session.vim'
+-- 	vim.cmd('mksession! ' .. fn)
+-- 	vim.cmd('restart source ' .. fn)
+-- end, {})
+
 -- P for Preview
 function P(v)
 	print(vim.inspect(v))

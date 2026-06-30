@@ -13,52 +13,68 @@ local state = {
 
 -- generic capture-then-replace primitive: stores the prior value plus the
 -- setter needed to restore it, keyed by id, in a single cache table.
-local function swap(cache, id, getter, setter, new_value)
+local swap = function(cache, id, getter, setter, new_value)
 	cache[id] = { value = getter(id), setter = setter }
 	setter(id, new_value)
 end
 
-local function restore_all(cache)
+local restore_all = function(cache)
 	for id, entry in pairs(cache) do
 		entry.setter(id, entry.value)
 	end
 end
 
-local function get_hl(name)
+local get_hl = function(name)
 	return vim.api.nvim_get_hl(0, { name = name })
 end
 
-local function set_hl(name, val)
+local set_hl = function(name, val)
 	vim.api.nvim_set_hl(0, name, val)
 end
 
-local function get_keymap(lhs)
-	for _, m in ipairs(vim.api.nvim_get_keymap('n')) do
-		if m.lhs == lhs then return m end
+-- buffer-local mappings (LSP's `K`, `gd`, etc., set with buffer = ev.buf)
+-- take precedence over global ones regardless of set order, so both the
+-- lookup and the override must account for buffer scope.
+local get_keymap = function(lhs)
+	for _, m in ipairs(vim.api.nvim_buf_get_keymap(0, 'n')) do
+		if m.lhs == lhs then return { map = m, buffer_local = true } end
 	end
-	return nil
+	for _, m in ipairs(vim.api.nvim_get_keymap('n')) do
+		if m.lhs == lhs then return { map = m, buffer_local = false } end
+	end
+	return { map = nil, buffer_local = false }
 end
 
 -- new_value is either a function (entering resize mode) or a previously
--- captured mapping dict / nil (restoring on quit).
-local function set_keymap(lhs, new_value)
-	if new_value == nil then
-		pcall(vim.keymap.del, 'n', lhs)
-	elseif type(new_value) == 'function' then
-		vim.keymap.set('n', lhs, new_value, { noremap = true, silent = true })
-	else
-		vim.keymap.set('n', lhs, new_value.callback or new_value.rhs, {
-			noremap = new_value.noremap == 1,
-			silent  = new_value.silent == 1,
-			expr    = new_value.expr == 1,
-			nowait  = new_value.nowait == 1,
+-- captured snapshot from get_keymap (restoring on quit).
+local set_keymap = function(lhs, new_value)
+	if type(new_value) == 'function' then
+		-- always shadow as buffer-local so it wins over any buffer-local
+		-- mapping already on this buffer.
+		vim.keymap.set('n', lhs, new_value,
+			{ noremap = true, silent = true, buffer = 0 })
+		return
+	end
+
+	pcall(vim.keymap.del, 'n', lhs, { buffer = 0 })
+
+	if new_value.map and new_value.buffer_local then
+		local m = new_value.map
+		vim.keymap.set('n', lhs, m.callback or m.rhs, {
+			noremap = m.noremap == 1,
+			silent  = m.silent == 1,
+			expr    = m.expr == 1,
+			nowait  = m.nowait == 1,
+			buffer  = 0,
 		})
 	end
+	-- if it was global or never existed, deleting our buffer-local override
+	-- is enough — the global mapping (or nothing) shows through on its own.
 end
 
 -- pure vim.api adjacency check: does another window in this tabpage sit
 -- directly against the current window's left/right/top/bottom edge.
-local function neighbors()
+local neighbors = function()
 	local cur = vim.api.nvim_get_current_win()
 	local cr, cc = unpack(vim.api.nvim_win_get_position(cur))
 	local cw, ch = vim.api.nvim_win_get_width(cur),

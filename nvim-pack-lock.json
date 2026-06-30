@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "99": {
-      "rev": "c17422457027c913c76c75a921fca1e623d2678e",
-      "src": "git@github.com:ThePrimeagen/99"
-    },
     "FixCursorHold.nvim": {
       "rev": "1900f89dc17c603eec29960f57c00bd9ae696495",
       "src": "git@github.com:antoinemadec/FixCursorHold.nvim"
@@ -29,10 +25,6 @@
       "rev": "f247308e68dab9f1133759b05d944569ad054546",
       "src": "git@github.com:ThePrimeagen/git-worktree.nvim"
     },
-    "gitignore-grabber.nvim": {
-      "rev": "365c1a2255f1badf5aa8a963a07f869a81ab6575",
-      "src": "git@github.com:antonk52/gitignore-grabber.nvim"
-    },
     "gitsigns.nvim": {
       "rev": "2038c666bd9d8a0b7349a0b6ee00dc83104b9ecf",
       "src": "git@github.com:lewis6991/gitsigns.nvim"
@@ -54,16 +46,12 @@
       "rev": "17ab008d71cbcd31f8c2891e11cb758579f597c0",
       "src": "git@github.com:yannvanhalewyn/jujutsu.nvim"
     },
-    "lualine.nvim": {
-      "rev": "221ce6b2d999187044529f49da6554a92f740a96",
-      "src": "git@github.com:nvim-lualine/lualine.nvim"
-    },
     "markdown-preview.nvim": {
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "git@github.com:iamcco/markdown-preview.nvim"
     },
     "mini.nvim": {
-      "rev": "c248713d3530710f67ec804cfbdfcd5b02b19dee",
+      "rev": "dc8a9918c3b1bc18a5fcd04d39b6d658074c0886",
       "src": "git@github.com:echasnovski/mini.nvim"
     },
     "multinput.nvim": {
@@ -71,7 +59,7 @@
       "src": "git@github.com:r0nsha/multinput.nvim"
     },
     "neotest": {
-      "rev": "ad991822b7076b1d940b33a9d6d0d30416d5df81",
+      "rev": "ff5437f7d9af801917bed119082934b0eb6ee0e9",
       "src": "git@github.com:nvim-neotest/neotest"
     },
     "neotest-plenary": {
@@ -83,7 +71,7 @@
       "src": "git@github.com:MunifTanjim/nui.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "3371bf298c1f56efc26771ee961f461176958fb5",
+      "rev": "dd1c9b802c943278179a5d819369cda085b79d45",
       "src": "git@github.com:neovim/nvim-lspconfig"
     },
     "nvim-nio": {
@@ -114,6 +102,10 @@
       "rev": "4a6883cb13fe097a20a046eb55f6dffd239276e3",
       "src": "git@github.com:stevearc/quicker.nvim"
     },
+    "resizer.nvim": {
+      "rev": "c0d2b07b6b610407378f568884beadced7e46f37",
+      "src": "git@github.com:ChausseBenjamin/resizer.nvim"
+    },
     "rustaceanvim": {
       "rev": "b25d186481624964523fee34f44c529b101c7435",
       "src": "git@github.com:mrcjkb/rustaceanvim"
@@ -133,10 +125,6 @@
     "vague.nvim": {
       "rev": "49fe06ad33d8847b931ba4279197bda222374cd1",
       "src": "git@github.com:vague-theme/vague.nvim"
-    },
-    "vim-arduino": {
-      "rev": "fccc07c43b342b5899ebba63838593333dc0017c",
-      "src": "git@github.com:ChausseBenjamin/vim-arduino"
     },
     "vim-dadbod": {
       "rev": "6d1d41da4873a445c5605f2005ad2c68c99d8770",

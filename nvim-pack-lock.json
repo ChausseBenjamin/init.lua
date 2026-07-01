@@ -13,6 +13,11 @@
       "rev": "6041ef0244b3fecf3b7f07de9af8cfbf8dbc4945",
       "src": "git@github.com:clabby/difftastic.nvim"
     },
+    "dropship.nvim": {
+      "rev": "8582366abf7ea94faa744701b58e31fe8c768b89",
+      "src": "git@github.com:ChausseBenjamin/dropship.nvim",
+      "version": "'telescope-ext'"
+    },
     "fidget.nvim": {
       "rev": "6f793b2bcd2d35e201c09520f698bb763220908a",
       "src": "git@github.com:j-hui/fidget.nvim"

@@ -27,6 +27,10 @@ vim.opt.formatoptions:append('r') -- Insert comment leader after <Enter>
 vim.opt.formatoptions:append('q') -- Allow formatting comments with gq
 vim.opt.formatoptions:append('j') -- Remove comment leader when joining lines
 
+-- Shutup about missing providers when running `:checkhealth`
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+
 -- ALWAYS start vim from the root of a git repo {{{
 -- (helps keeping harpoons consistent)
 function Is_git_repo()

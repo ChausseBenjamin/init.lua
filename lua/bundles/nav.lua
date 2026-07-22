@@ -8,6 +8,5 @@
 require('plugins.oil')
 require('plugins.telescope')
 require('plugins.dropship')
-require('plugins.winresize')
 require('plugins.resize')
 require('plugins.harpoon')

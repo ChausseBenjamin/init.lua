@@ -61,6 +61,12 @@ require('mini.ai').setup({
 	},
 })
 
+-- Quickest save in the west (without the `l` delay)
+require('mini.keymap').map_combo('n', 'lkj', function()
+	vim.cmd.update()
+	vim.notify("Saved " .. vim.fn.expand('%:t'))
+end)
+
 require('mini.bracketed').setup({
 	-- Disable what's unnecessary or overlaps
 	file = { suffix = '', options = {} },

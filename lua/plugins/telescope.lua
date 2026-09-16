@@ -11,7 +11,7 @@ vim.pack.add {
 	{ src = GH .. 'nvim-lua/plenary.nvim' },
 	{
 		src = GH .. 'nvim-telescope/telescope.nvim',
-		version = vim.version.range('0.1')
+		version = vim.version.range('0.2')
 	},
 }
 
@@ -26,7 +26,7 @@ ts.setup({
 			preview = { ' ' } -- Single line on top to separate from list
 		},
 		color_devicons = true,
-		path_displays = { 'smart' },
+		path_display = { 'smart' },
 		layout_config = {
 			height = 400,
 			width = 400,

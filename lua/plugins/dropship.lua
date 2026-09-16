@@ -10,22 +10,13 @@
 require('plugins.telescope')
 DevPack('ChausseBenjamin/dropship.nvim')
 
-local ts = require('telescope')
-ts.setup({
-	extensions = {
-		dropship = {
-			new_tab_explorer = false,
-			drop_locations = '~/.cache/shortcuts.lua',
-		}
-	}
+require('dropship').setup({
+	new_tab_explorer = false,
+	drop_locations = '~/.cache/shortcuts.lua',
 })
 
-ts.load_extension('dropship')
-
 local function lazy_ds(method)
-	return function()
-		require('telescope').extensions.dropship[method]()
-	end
+	return function() require('dropship')[method]() end
 end
 
 local ds_keys = {

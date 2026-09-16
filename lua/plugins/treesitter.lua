@@ -48,50 +48,6 @@ require('nvim-treesitter').setup({
 		},
 	},
 	additional_vim_regex_highlighting = false,
-	textobjects = {
-		swap = {
-			enable = true,
-			swap_next = {
-				['<leader>s'] = '@parameter.inner',
-			},
-			swap_previous = {
-				['<leader>S'] = '@parameter.inner',
-			},
-		},
-		move = {
-			enable = true,
-			set_jumps = true,
-
-			goto_next_start = {
-				[']f'] = '@function.outer',
-			},
-			goto_next_end = {
-				[']F'] = '@function.outer',
-			},
-
-			goto_previous_start = {
-				['[f'] = '@function.outer',
-			},
-			goto_previous_end = {
-				['[F'] = '@function.outer',
-			},
-
-			goto_next = {
-				[']m'] = '@function.inner',
-				[']o'] = '@loop.inner',
-				[']O'] = '@loop.outer',
-				[']c'] = '@conditional.*',
-				[']C'] = '@class.*',
-			},
-			goto_previous = {
-				['[m'] = '@function.inner',
-				['[o'] = '@loop.inner',
-				['[O'] = '@loop.outer',
-				['[c'] = '@conditional.*',
-				['[C'] = '@class.*',
-			},
-		},
-	},
 })
 
 -- Add filetype detection for custom parsers
@@ -134,43 +90,42 @@ require('vim.treesitter.query').add_predicate('is-mise?',
 		return string.match(filename, '.*mise.*%.toml$') ~= nil
 	end, { force = true, all = false })
 
+-- Treesitter capture jumps, mirroring the mini.ai custom_textobjects ids.
+-- `move.goto_*` registers itself as the last move, so `;`/`,` below repeat it.
+local ok_move, move = pcall(require, 'nvim-treesitter-textobjects.move')
+if ok_move then
+	local ts_moves = {
+		{ 'f', '@call.outer' },        -- mini.ai `f` = function call
+		{ 'F', '@function.outer' },    -- mini.ai `F` = function definition
+		{ 'o', '@loop.outer' },        -- mini.ai `o` = loop
+		{ 'c', '@conditional.outer' }, -- mini.ai `c` = conditional
+		{ 'C', '@class.outer' },       -- mini.ai `C` = class
+	}
+	for _, spec in ipairs(ts_moves) do
+		local id, capture = spec[1], spec[2]
+		vim.keymap.set({ 'n', 'x', 'o' }, ']' .. id,
+			function() move.goto_next_start(capture, 'textobjects') end,
+			{ desc = 'Next ' .. capture })
+		vim.keymap.set({ 'n', 'x', 'o' }, '[' .. id,
+			function() move.goto_previous_start(capture, 'textobjects') end,
+			{ desc = 'Previous ' .. capture })
+	end
+end
+
 -- Treesitter Text Objects (repeatable moves)
 local ok_tsrm, tsrm = pcall(require,
-	'nvim-treesitter.textobjects.repeatable_move')
+	'nvim-treesitter-textobjects.repeatable_move')
 if not ok_tsrm then
 	return
 end
-vim.keymap.set(
-	{ 'n', 'x', 'o' },
-	';',
-	tsrm.repeat_last_move_next
-)
-vim.keymap.set(
-	{ 'n', 'x', 'o' },
-	',',
-	tsrm.repeat_last_move_previous
-)
-vim.keymap.set(
-	{ 'n', 'x', 'o' },
-	'f',
-	tsrm.builtin_f_expr,
-	{ expr = true }
-)
-vim.keymap.set(
-	{ 'n', 'x', 'o' },
-	'F',
-	tsrm.builtin_F_expr,
-	{ expr = true }
-)
-vim.keymap.set(
-	{ 'n', 'x', 'o' },
-	't',
-	tsrm.builtin_t_expr,
-	{ expr = true }
-)
-vim.keymap.set(
-	{ 'n', 'x', 'o' },
-	'T',
-	tsrm.builtin_T_expr,
-	{ expr = true }
-)
+local keymaps = {
+	{ ';', tsrm.repeat_last_move_next, {}, },
+	{ ',', tsrm.repeat_last_move_previous, {}, },
+	{ 'f', tsrm.builtin_f_expr, { expr = true } },
+	{ 'F', tsrm.builtin_F_expr, { expr = true } },
+	{ 't', tsrm.builtin_t_expr, { expr = true } },
+	{ 'T', tsrm.builtin_T_expr, { expr = true } },
+}
+for _, map in ipairs(keymaps) do
+	vim.keymap.set({ 'n', 'x', 'o' }, map[1], map[2], map[3])
+end

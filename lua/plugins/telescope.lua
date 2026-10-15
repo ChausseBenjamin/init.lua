@@ -18,6 +18,7 @@ vim.pack.add {
 local ts = require('telescope')
 local tsb = require('telescope.builtin')
 local actions = require('telescope.actions')
+require('plugins.nucleo-backend')
 
 ts.setup({
 	defaults = {

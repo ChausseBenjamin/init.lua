@@ -132,8 +132,7 @@
     },
     "telescope.nvim": {
       "rev": "5255aa27c422de944791318024167ad5d40aad20",
-      "src": "git@github.com:nvim-telescope/telescope.nvim",
-      "version": "0.2.0 - 0.3.0"
+      "src": "git@github.com:nvim-telescope/telescope.nvim"
     },
     "termpicker.nvim": {
       "rev": "088052b384788fdcecc33369ac0ce6cf7be6a4d2",

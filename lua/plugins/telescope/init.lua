@@ -18,7 +18,7 @@ vim.pack.add {
 local ts = require('telescope')
 local tsb = require('telescope.builtin')
 local actions = require('telescope.actions')
-require('plugins.nucleo-backend')
+require('plugins.telescope.nucleo')
 
 local trim_pad = '  '
 local trim_mark = '/' -- '󰩀/'

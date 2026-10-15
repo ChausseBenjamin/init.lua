@@ -15,10 +15,12 @@ vim.pack.add {
 local mini_defaults = {
 	'align',
 	'surround',
+	'icons',
 }
 for _, pkg in ipairs(mini_defaults) do
 	require('mini.' .. pkg).setup()
 end
+MiniIcons.mock_nvim_web_devicons()
 
 -- Remap gx to gX to avoid conflict with URL opening
 require('mini.operators').setup({

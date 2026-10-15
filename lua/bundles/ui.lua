@@ -9,7 +9,6 @@
 vim.pack.add {
 	{ src = GH .. 'nvim-telescope/telescope-ui-select.nvim' },
 	{ src = GH .. 'r0nsha/multinput.nvim' },
-	{ src = GH .. 'nvim-tree/nvim-web-devicons' },
 }
 
 -- UI tweaks

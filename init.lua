@@ -46,12 +46,12 @@ require('core.tools')
 require('core.plugin-mgr')
 require('core.dev')
 
+require('bundles.misc')
 require('bundles.ui')
 require('bundles.keys')
 require('bundles.lsp')
 require('bundles.git')
 require('bundles.nav')
-require('bundles.misc')
 require('bundles.ai')
 
 -- require('plugins.rafta')

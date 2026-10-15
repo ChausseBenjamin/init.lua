@@ -14,7 +14,6 @@ vim.pack.add {
 -- UI tweaks
 require('plugins.themes.vague')
 require('plugins.heirline.init')
--- require('plugins.lualine')
 require('plugins.treesitter')
 require('plugins.telescope')
 require('plugins.notifier')

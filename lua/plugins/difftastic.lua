@@ -24,8 +24,6 @@ require('difftastic-nvim').setup({
 		jj_log_revset = nil,           -- optional: jj revset for picker log (nil = omit -r and use jj default)
 	},
 	keymaps = {
-		next_file = ']f',
-		prev_file = '[f',
 		next_hunk = ']c',
 		prev_hunk = '[c',
 		close = 'q',

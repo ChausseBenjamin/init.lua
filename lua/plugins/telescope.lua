@@ -17,6 +17,7 @@ vim.pack.add {
 
 local ts = require('telescope')
 local tsb = require('telescope.builtin')
+local actions = require('telescope.actions')
 
 ts.setup({
 	defaults = {
@@ -32,6 +33,16 @@ ts.setup({
 			width = 400,
 			prompt_position = 'bottom',
 			preview_cutoff = 80,
+		},
+		mappings = {
+			i = {
+				['<C-l>'] = actions.send_to_loclist + actions.open_loclist,
+				['<M-l>'] = actions.send_selected_to_loclist + actions.open_loclist,
+			},
+			n = {
+				['<C-l>'] = actions.send_to_loclist + actions.open_loclist,
+				['<M-l>'] = actions.send_selected_to_loclist + actions.open_loclist,
+			}
 		}
 	},
 	pickers = {
@@ -110,6 +121,15 @@ local ts_keys = {
 			tsb.lsp_references()
 		end,
 		d = '[P]aruse [R]eferences',
+	},
+	{
+		k = '<leader>pf',
+		f = function()
+			tsb.lsp_document_symbols({
+				symbols = { 'Function', 'Method', 'Constructor' },
+			})
+		end,
+		d = '[P]aruse [F]unctions',
 	},
 	{
 		k = '<C-p>',

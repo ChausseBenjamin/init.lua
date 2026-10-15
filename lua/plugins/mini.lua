@@ -42,11 +42,11 @@ local gen_spec = require('mini.ai').gen_spec
 require('mini.ai').setup({
 	n_lines = 300,
 	custom_textobjects = {
-		F = gen_spec.treesitter({ -- `f` is for function calls not definitions
+		f = gen_spec.treesitter({ -- function *definition*; overrides builtin `f` (function call)
 			a = '@function.outer',
 			i = '@function.inner',
 		}),
-		o = gen_spec.treesitter({
+		o = gen_spec.treesitter({ -- `l` taken by `:h location-list`
 			a = '@loop.outer',
 			i = '@loop.inner',
 		}),
@@ -54,7 +54,7 @@ require('mini.ai').setup({
 			a = '@conditional.outer',
 			i = '@conditional.inner',
 		}),
-		C = gen_spec.treesitter({
+		s = gen_spec.treesitter({
 			a = '@class.outer',
 			i = '@class.inner',
 		}),
@@ -80,3 +80,21 @@ require('mini.bracketed').setup({
 	comment = { suffix = 'g', options = {} },
 	quickfix = { suffix = 'q', options = { wrap = false } },
 })
+
+-- Make `]g`/`[g` comment navigation repeatable with `;`/`,` by registering it
+-- through treesitter-textobjects' `last_move` machinery (shared with the `]f`,
+-- `]s`, `]o`, `]c` moves). Overrides mini.bracketed's plain `]g`/`[g` maps.
+-- `]G`/`[G` (first/last) stay non-repeatable.
+local ok_tsrm, tsrm = pcall(require,
+	'nvim-treesitter-textobjects.repeatable_move')
+if ok_tsrm then
+	local comment_move = tsrm.make_repeatable_move(function(opts)
+		MiniBracketed.comment(opts.forward and 'forward' or 'backward')
+	end)
+	vim.keymap.set({ 'n', 'x', 'o' }, ']g',
+		function() comment_move({ forward = true }) end,
+		{ desc = 'Next comment block' })
+	vim.keymap.set({ 'n', 'x', 'o' }, '[g',
+		function() comment_move({ forward = false }) end,
+		{ desc = 'Previous comment block' })
+end

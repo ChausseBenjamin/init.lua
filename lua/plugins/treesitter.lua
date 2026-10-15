@@ -95,11 +95,10 @@ require('vim.treesitter.query').add_predicate('is-mise?',
 local ok_move, move = pcall(require, 'nvim-treesitter-textobjects.move')
 if ok_move then
 	local ts_moves = {
-		{ 'f', '@call.outer' },        -- mini.ai `f` = function call
-		{ 'F', '@function.outer' },    -- mini.ai `F` = function definition
+		{ 'f', '@function.outer' },    -- mini.ai `f` = function definition
 		{ 'o', '@loop.outer' },        -- mini.ai `o` = loop
 		{ 'c', '@conditional.outer' }, -- mini.ai `c` = conditional
-		{ 'C', '@class.outer' },       -- mini.ai `C` = class
+		{ 's', '@class.outer' },       -- mini.ai `s` = class/struct
 	}
 	for _, spec in ipairs(ts_moves) do
 		local id, capture = spec[1], spec[2]
@@ -122,7 +121,6 @@ local keymaps = {
 	{ ';', tsrm.repeat_last_move_next, {}, },
 	{ ',', tsrm.repeat_last_move_previous, {}, },
 	{ 'f', tsrm.builtin_f_expr, { expr = true } },
-	{ 'F', tsrm.builtin_F_expr, { expr = true } },
 	{ 't', tsrm.builtin_t_expr, { expr = true } },
 	{ 'T', tsrm.builtin_T_expr, { expr = true } },
 }

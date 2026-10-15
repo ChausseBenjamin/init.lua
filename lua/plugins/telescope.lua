@@ -20,6 +20,9 @@ local tsb = require('telescope.builtin')
 local actions = require('telescope.actions')
 require('plugins.nucleo-backend')
 
+local trim_pad = '  '
+local trim_mark = '/' -- '󰩀/'
+
 ts.setup({
 	defaults = {
 		borderchars = {
@@ -29,12 +32,11 @@ ts.setup({
 		},
 		color_devicons = true,
 		path_display = function(_, path)
-			local name = vim.fn.fnamemodify(path, ':t')
-			local parent = vim.fn.fnamemodify(path, ':h:t')
-			if parent == '' or parent == '.' then
-				return name
-			end
-			return parent .. '/' .. name
+			local dir = vim.fn.fnamemodify(path, ':h')
+			if dir == '' or dir == '.' then return trim_pad .. path end
+			local parent = vim.fn.fnamemodify(dir, ':t')
+			if dir == parent or parent == '' then return trim_pad .. path end
+			return trim_mark .. parent .. '/' .. vim.fn.fnamemodify(path, ':t')
 		end,
 		layout_config = {
 			height = 400,
@@ -42,6 +44,7 @@ ts.setup({
 			prompt_position = 'bottom',
 			preview_cutoff = 80,
 		},
+		dynamic_preview_title = true,
 		mappings = {
 			i = {
 				['<C-l>'] = actions.send_to_loclist + actions.open_loclist,

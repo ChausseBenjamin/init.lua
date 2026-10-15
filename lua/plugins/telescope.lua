@@ -28,7 +28,14 @@ ts.setup({
 			preview = { ' ' } -- Single line on top to separate from list
 		},
 		color_devicons = true,
-		path_display = { 'smart' },
+		path_display = function(_, path)
+			local name = vim.fn.fnamemodify(path, ':t')
+			local parent = vim.fn.fnamemodify(path, ':h:t')
+			if parent == '' or parent == '.' then
+				return name
+			end
+			return parent .. '/' .. name
+		end,
 		layout_config = {
 			height = 400,
 			width = 400,

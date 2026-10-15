@@ -1,4 +1,16 @@
+-- Track the last VCS root so we can drop heirline's frozen render when the
+-- repo context changes (e.g. `:cd` out of a repo, or into another one).
+local last_root
+
 return {
+	condition = function(self)
+		local root = vim.fs.root(vim.fn.getcwd(), { '.git', '.jj' })
+		if root ~= last_root then
+			last_root = root
+			self._win_cache = nil
+		end
+		return root ~= nil
+	end,
 	init = function(self)
 		-- 1. jj attempt
 		if vim.fn.executable('jj') == 1 then

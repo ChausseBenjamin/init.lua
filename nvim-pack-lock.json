@@ -54,8 +54,12 @@
       "rev": "fc5a5757b99aace86a0b3f0775347b967990225b",
       "src": "git@github.com:yannvanhalewyn/jujutsu.nvim"
     },
+    "markdown-preview.nvim": {
+      "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
+      "src": "git@github.com:iamcco/markdown-preview.nvim"
+    },
     "mini.nvim": {
-      "rev": "e3f2349a65143ff062f0b70ee9d68d8ce35c7059",
+      "rev": "295af26358628c8ba8f007ff6a7e0aec2f642a31",
       "src": "git@github.com:echasnovski/mini.nvim"
     },
     "multinput.nvim": {
@@ -79,7 +83,7 @@
       "src": "git@github.com:MunifTanjim/nui.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "ac062d0d01c019c0dbdb798968f3e5d8b35c3853",
+      "rev": "45a3a444b710511c39abca3b60bb6e23a21e3de5",
       "src": "git@github.com:neovim/nvim-lspconfig"
     },
     "nvim-nio": {
@@ -105,6 +109,10 @@
     "quicker.nvim": {
       "rev": "4a6883cb13fe097a20a046eb55f6dffd239276e3",
       "src": "git@github.com:stevearc/quicker.nvim"
+    },
+    "rafta.nvim": {
+      "rev": "a7129bddc734ae4f0730607083e03dcd05203a95",
+      "src": "git@github.com:ChausseBenjamin/rafta.nvim"
     },
     "resizer.nvim": {
       "rev": "c0d2b07b6b610407378f568884beadced7e46f37",

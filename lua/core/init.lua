@@ -20,6 +20,7 @@ vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 
 vim.o.autoread = true
+vim.o.exrc = true
 
 vim.o.textwidth = 80
 vim.opt.formatoptions:append('c') -- Auto-wrap comments

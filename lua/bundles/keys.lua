@@ -33,6 +33,9 @@ vim.keymap.set('n', '<leader>mk', function() vim.cmd.make() end,
 -- Don't mess with pasted text
 vim.keymap.set('i', '<C-r>+', '<C-r><C-o>+')
 
+-- Leave terminal mode easily without overruling the `Esc` key
+vim.keymap.set("t", "<C-]>", function() vim.cmd.stopinsert() end, { desc = "Exit terminal mode" })
+
 -- Capital 'Y' for system clipboard
 vim.keymap.set(
 	{ 'n', 'v', 'x' },

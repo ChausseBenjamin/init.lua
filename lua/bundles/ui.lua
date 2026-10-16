@@ -7,17 +7,13 @@
 -- Making things pretty
 
 vim.pack.add {
-	-- TODO: Maybe switch to this?
-	-- https://github.com/nvim-telescope/telescope-ui-select.nvim
 	{ src = GH .. 'nvim-telescope/telescope-ui-select.nvim' },
 	{ src = GH .. 'r0nsha/multinput.nvim' },
-	{ src = GH .. 'nvim-tree/nvim-web-devicons' },
 }
 
 -- UI tweaks
 require('plugins.themes.vague')
 require('plugins.heirline.init')
--- require('plugins.lualine')
 require('plugins.treesitter')
 require('plugins.telescope')
 require('plugins.notifier')

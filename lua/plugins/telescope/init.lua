@@ -11,12 +11,17 @@ vim.pack.add {
 	{ src = GH .. 'nvim-lua/plenary.nvim' },
 	{
 		src = GH .. 'nvim-telescope/telescope.nvim',
-		version = vim.version.range('0.1')
+		version = vim.version.range('0.2')
 	},
 }
 
 local ts = require('telescope')
 local tsb = require('telescope.builtin')
+local actions = require('telescope.actions')
+require('plugins.telescope.nucleo')
+
+local trim_pad = '  '
+local trim_mark = '/' -- '󰩀/'
 
 ts.setup({
 	defaults = {
@@ -26,12 +31,29 @@ ts.setup({
 			preview = { ' ' } -- Single line on top to separate from list
 		},
 		color_devicons = true,
-		path_displays = { 'smart' },
+		path_display = function(_, path)
+			local dir = vim.fn.fnamemodify(path, ':h')
+			if dir == '' or dir == '.' then return trim_pad .. path end
+			local parent = vim.fn.fnamemodify(dir, ':t')
+			if dir == parent or parent == '' then return trim_pad .. path end
+			return trim_mark .. parent .. '/' .. vim.fn.fnamemodify(path, ':t')
+		end,
 		layout_config = {
 			height = 400,
 			width = 400,
 			prompt_position = 'bottom',
 			preview_cutoff = 80,
+		},
+		dynamic_preview_title = true,
+		mappings = {
+			i = {
+				['<C-l>'] = actions.send_to_loclist + actions.open_loclist,
+				['<M-l>'] = actions.send_selected_to_loclist + actions.open_loclist,
+			},
+			n = {
+				['<C-l>'] = actions.send_to_loclist + actions.open_loclist,
+				['<M-l>'] = actions.send_selected_to_loclist + actions.open_loclist,
+			}
 		}
 	},
 	pickers = {
@@ -110,6 +132,15 @@ local ts_keys = {
 			tsb.lsp_references()
 		end,
 		d = '[P]aruse [R]eferences',
+	},
+	{
+		k = '<leader>pf',
+		f = function()
+			tsb.lsp_document_symbols({
+				symbols = { 'Function', 'Method', 'Constructor' },
+			})
+		end,
+		d = '[P]aruse [F]unctions',
 	},
 	{
 		k = '<C-p>',

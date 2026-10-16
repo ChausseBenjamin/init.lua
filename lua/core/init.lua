@@ -32,7 +32,7 @@ vim.opt.formatoptions:append('j') -- Remove comment leader when joining lines
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- ALWAYS start vim from the root of a git repo {{{
+-- ALWAYS start vim from the root of a git repo
 -- (helps keeping harpoons consistent)
 function Is_git_repo()
 	local git_dir = vim.fn.systemlist('git rev-parse --show-toplevel')

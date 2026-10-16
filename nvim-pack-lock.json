@@ -54,10 +54,6 @@
       "rev": "fc5a5757b99aace86a0b3f0775347b967990225b",
       "src": "git@github.com:yannvanhalewyn/jujutsu.nvim"
     },
-    "markdown-preview.nvim": {
-      "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
-      "src": "git@github.com:iamcco/markdown-preview.nvim"
-    },
     "mini.nvim": {
       "rev": "e3f2349a65143ff062f0b70ee9d68d8ce35c7059",
       "src": "git@github.com:echasnovski/mini.nvim"
@@ -91,7 +87,7 @@
       "src": "git@github.com:nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "ca581c3436fc2b236847f5b739ebc263739e5ca6",
+      "rev": "cf12346a3414fa1b06af75c79faebe7f76df080a",
       "src": "git@github.com:nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
@@ -110,16 +106,12 @@
       "rev": "4a6883cb13fe097a20a046eb55f6dffd239276e3",
       "src": "git@github.com:stevearc/quicker.nvim"
     },
-    "rafta.nvim": {
-      "rev": "a7129bddc734ae4f0730607083e03dcd05203a95",
-      "src": "git@github.com:ChausseBenjamin/rafta.nvim"
-    },
     "resizer.nvim": {
       "rev": "c0d2b07b6b610407378f568884beadced7e46f37",
       "src": "git@github.com:ChausseBenjamin/resizer.nvim"
     },
     "rustaceanvim": {
-      "rev": "a968f5133b8b24f481de12f08cd79420d1ace559",
+      "rev": "f2f0c1231a5b019dbc1fd6dafac1751c878925a3",
       "src": "git@github.com:mrcjkb/rustaceanvim"
     },
     "telescope-nucleo-sorter.nvim": {

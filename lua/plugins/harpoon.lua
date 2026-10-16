@@ -7,23 +7,28 @@
 --
 -- Hook onto files and never let go
 
-require('plugins.telescope')
-vim.pack.add {
-	{
-		src = GH .. 'theprimeagen/harpoon',
-		version = 'harpoon2'
-	},
-	{
-		src = GH .. 'mike-jl/harpoonEx',
-		opts = { reload_on_dir_change = true }
+local loaded = false
+local hp = {}
+local function lazy_load()
+	if loaded then return end
+	require('plugins.telescope')
+	vim.pack.add {
+		{
+			src = GH .. 'theprimeagen/harpoon',
+			version = 'harpoon2'
+		},
+		{
+			src = GH .. 'mike-jl/harpoonEx',
+			opts = { reload_on_dir_change = true }
+		}
 	}
-}
 
-local hp = require('harpoon')
-hp:setup({}) -- Setup FIRST
-
-local hpx = require('harpoonEx')
-hp:extend(hpx.extend()) -- Then extend
+	hp = require('harpoon')
+	-- Setup FIRST, then extend
+	hp:setup({})
+	hp:extend(require('harpoonEx').extend())
+	loaded = true
+end
 
 local hp_keys = {
 	{
@@ -94,5 +99,8 @@ local hp_keys = {
 }
 
 for _, map in ipairs(hp_keys) do
-	vim.keymap.set('n', map.k, map.f, { desc = map.d })
+	vim.keymap.set('n', map.k, function()
+		lazy_load()
+		map.f()
+	end, { desc = map.d })
 end

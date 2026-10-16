@@ -5,20 +5,19 @@
 --  \__\___|_|  |_| |_| |_| .__/|_|\___|_|\_\___|_|
 --                        |_|
 -- pick colors!
-
 DevPack('ChausseBenjamin/termpicker.nvim')
+local tp = require('termpicker')
+tp.setup({})
 
-local termpicker = require('termpicker')
-termpicker.setup({})
 
 -- Main Picker
 vim.keymap.set({ 'i', 'n', 'o', 'x' }, '<C-g>', function()
-	termpicker.pick()
+	tp.pick()
 end, { desc = 'Pick color' })
 
 -- Picker into Yank Buffer
 vim.keymap.set('n', '<leader>cy', function()
-	require('termpicker').pick({ output = '"' })
+	tp.pick({ output = '"' })
 end, { desc = 'Pick color to yank buffer' })
 
 -- Picker with dynamic preview text
@@ -27,7 +26,7 @@ vim.keymap.set('x', '<leader>cp', function()
 	vim.cmd('normal! y')
 	local selected_text = vim.fn.getreg('"')
 
-	require('termpicker').pick({
+	tp.pick({
 		output = '"',
 		preview = { text = selected_text },
 		behaviour = { preserve_selection = true }

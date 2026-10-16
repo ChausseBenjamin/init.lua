@@ -1,34 +1,38 @@
-require('plugins.telescope')
+local loaded = false
 
-DevPack('ChausseBenjamin/nerdy.nvim')
+local function lazy_load()
+	if loaded then return end
+	require('plugins.telescope')
+	DevPack('ChausseBenjamin/nerdy.nvim')
+	require('nerdy').setup({
+		max_recents = 30,
+		add_default_keybindings = false,
+		output_location = '', -- yank register
+	})
 
-local nerdy = require('nerdy')
+	require('telescope').load_extension('nerdy')
 
-nerdy.setup({
-	max_recents = 30,
-	add_default_keybindings = false,
-	output_location = '', -- yank register
-})
-
-
-require('telescope').load_extension('nerdy')
-
--- Wrap the extension function to inject your theme
-local original_nerdy = require('telescope').extensions.nerdy.nerdy
-require('telescope').extensions.nerdy.nerdy = function(opts)
-	opts = vim.tbl_deep_extend('force', {
-		borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-		layout_config = {
-			height = 100,
-			width = 400,
-			prompt_position = 'bottom',
-			preview_cutoff = 40,
-		},
-	}, opts or {})
-	return original_nerdy(opts)
+	-- Wrap the extension function to inject your theme
+	local original_nerdy = require('telescope').extensions.nerdy.nerdy
+	require('telescope').extensions.nerdy.nerdy = function(opts)
+		opts = vim.tbl_deep_extend('force', {
+			borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+			layout_config = {
+				height = 100,
+				width = 400,
+				prompt_position = 'bottom',
+				preview_cutoff = 40,
+			},
+		}, opts or {})
+		return original_nerdy(opts)
+	end
+	loaded = true
 end
 
 vim.keymap.set('n', '<leader>pi',
-	require('telescope').extensions.nerdy.nerdy,
+	function()
+		lazy_load()
+		require('telescope').extensions.nerdy.nerdy()
+	end,
 	{ desc = '[P]aruse [I]cons' }
 )

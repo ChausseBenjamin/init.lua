@@ -37,20 +37,8 @@ local function notify(msg, level)
 	vim.schedule(function() vim.notify(msg, level) end)
 end
 
-<<<<<<< HEAD
-local build = { 'cargo', '+stable', 'rustc', '--release' }
-if vim.uv.os_uname().sysname == 'Darwin' then
-	vim.list_extend(build,
-		{ '--', '-C', 'link-arg=-undefined', '-C', 'link-arg=dynamic_lookup' })
-||||||| a4d8b8a
-local build = { 'cargo', 'rustc', '--release' }
-if vim.uv.os_uname().sysname == 'Darwin' then
-	vim.list_extend(build,
-		{ '--', '-C', 'link-arg=-undefined', '-C', 'link-arg=dynamic_lookup' })
-=======
 local function notify_once(msg, level)
 	vim.schedule(function() vim.notify_once(msg, level) end)
->>>>>>> 74825e498050b591a0462fd1d98dbd8fbeab7871
 end
 
 local function read_state()
@@ -84,7 +72,7 @@ local function rev_at(path)
 end
 
 local function cargo_cmd()
-	local cmd = { 'cargo', 'rustc', '--release' }
+	local cmd = { 'cargo', '+stable', 'rustc', '--release' }
 	-- A cdylib on macOS needs the symbols resolved at load time by the host.
 	if is_mac then
 		vim.list_extend(cmd,

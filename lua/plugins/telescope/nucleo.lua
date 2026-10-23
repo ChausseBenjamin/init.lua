@@ -1,4 +1,4 @@
---                 _
+--                   _
 --  _ __  _   _  ___| | ___  ___
 -- | '_ \| | | |/ __| |/ _ \/ _ \
 -- | | | | |_| | (__| |  __/ (_) |
@@ -27,11 +27,13 @@ local repo = 'AntoineGagne/telescope-nucleo-sorter.nvim'
 local name = repo:match('[^/]+$')
 
 local is_mac = vim.uv.os_uname().sysname == 'Darwin'
-local lib = ('target/release/libnucleo_nvim.%s'):format(is_mac and 'dylib' or 'so')
+local lib = ('target/release/libnucleo_nvim.%s'):format(is_mac and 'dylib' or
+	'so')
 
 -- Seconds after which a failed build for the same revision is retried.
 local RETRY_AFTER = 60 * 60
-local state_path = vim.fs.joinpath(vim.fn.stdpath 'state', 'telescope-nucleo-build.json')
+local state_path = vim.fs.joinpath(vim.fn.stdpath 'state',
+	'telescope-nucleo-build.json')
 
 local function notify(msg, level)
 	vim.schedule(function() vim.notify(msg, level) end)
@@ -67,7 +69,8 @@ local function plug_path()
 end
 
 local function rev_at(path)
-	local res = vim.system({ 'git', '-C', path, 'rev-parse', 'HEAD' }, { text = true }):wait()
+	local res = vim.system({ 'git', '-C', path, 'rev-parse', 'HEAD' },
+		{ text = true }):wait()
 	return res.code == 0 and vim.trim(res.stdout) or nil
 end
 
@@ -92,7 +95,7 @@ local function build(opts)
 	local rev = rev_at(path)
 	local state = read_state()
 	local throttled = rev ~= nil and state.rev == rev
-		and type(state.time) == 'number' and (os.time() - state.time) < RETRY_AFTER
+			and type(state.time) == 'number' and (os.time() - state.time) < RETRY_AFTER
 	if not opts.force and throttled then
 		return
 	end

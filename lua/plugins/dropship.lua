@@ -4,35 +4,42 @@
 -- | (_| | | | (_) | |_) \__ \ | | | | |_) |
 --  \__,_|_|  \___/| .__/|___/_| |_|_| .__/
 --                 |_|               |_|
---
 -- Get dropped right back into you projects
 
-require('plugins.telescope')
-DevPack('ChausseBenjamin/dropship.nvim')
+local loaded = false
+local function lazy_load()
+	if loaded then return end
+	require('plugins.telescope')
+	DevPack('ChausseBenjamin/dropship.nvim')
 
-require('dropship').setup({
-	new_tab_explorer = false,
-	drop_locations = '~/.cache/shortcuts.lua',
-})
+	require('dropship').setup({
+		new_tab_explorer = false,
+		drop_locations = '~/.cache/shortcuts.lua',
+	})
+	loaded = true
+end
 
-local function lazy_ds(method)
-	return function() require('dropship')[method]() end
+local function ds(method)
+	return function()
+		lazy_load()
+		require('dropship')[method]()
+	end
 end
 
 local ds_keys = {
 	{
 		k = '<leader>dt',
-		f = lazy_ds('new_tab'),
+		f = ds('new_tab'),
 		d = '[D]ropship in a new [T]ab'
 	},
 	{
 		k = '<leader>dc',
-		f = lazy_ds('current_tab'),
+		f = ds('current_tab'),
 		d = '[D]ropship [C]urrent tab',
 	},
 	{
 		k = '<leader>de',
-		f = lazy_ds('globally'),
+		f = ds('globally'),
 		d = '[D]ropship [E]verywhere',
 	},
 }

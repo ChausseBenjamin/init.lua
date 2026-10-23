@@ -5,7 +5,7 @@
 --  \__, |_|\__|___/_|\__, |_| |_|___/
 --  |___/             |___/
 --
--- To find someone to blame
+-- Find the culprit for that awful code (probably you)
 
 
 vim.pack.add {
@@ -16,7 +16,8 @@ vim.pack.add {
 local gs = require('gitsigns')
 gs.setup()
 
-local ok_ts, ts_repeat = pcall(require, 'nvim-treesitter-textobjects.repeatable_move')
+local ok_ts, ts_repeat = pcall(require,
+	'nvim-treesitter-textobjects.repeatable_move')
 if not ok_ts then
 	return
 end

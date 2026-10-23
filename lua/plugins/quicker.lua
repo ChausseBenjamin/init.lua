@@ -4,7 +4,6 @@
 -- | (_| | |_| | | (__|   <  __/ |
 --  \__, |\__,_|_|\___|_|\_\___|_|
 --     |_|
---
 -- Visual and functional tweaks to the quickfix
 
 vim.pack.add {

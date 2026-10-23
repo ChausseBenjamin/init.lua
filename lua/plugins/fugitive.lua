@@ -4,7 +4,6 @@
 -- |  _| |_| | (_| | | |_| |\ V /  __/
 -- |_|  \__,_|\__, |_|\__|_| \_/ \___|
 --            |___/
---
 -- git like the one true Pope intended
 
 vim.pack.add {

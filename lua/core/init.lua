@@ -32,20 +32,25 @@ vim.opt.formatoptions:append('j') -- Remove comment leader when joining lines
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- ALWAYS start vim from the root of a git repo {{{
+-- stolen from vim-sensible (thx tpope, the one true Pope)
+vim.o.scrolloff = 1
+vim.o.sidescrolloff = 2
+vim.opt.display:append('truncate')
+vim.opt.listchars:append({ extends = '>', precedes = '<' })
+
+-- ALWAYS start vim from the root of a git repo
 -- (helps keeping harpoons consistent)
+-- vim.fs.root() walks the filesystem itself, so no `git` subprocess is spawned
+-- at startup. It matches a `.git` file too, so linked worktrees and submodules
+-- resolve to their own root rather than the main repo's.
 function Is_git_repo()
-	local git_dir = vim.fn.systemlist('git rev-parse --show-toplevel')
-	if vim.v.shell_error ~= 0 then
-		return false
-	end
-	return git_dir[1]
+	return vim.fs.root(0, '.git')
 end
 
 local function cd_to_git_root()
 	local git_root = Is_git_repo()
 	if git_root then
-		vim.cmd('tcd ' .. git_root)
+		vim.cmd('tcd ' .. vim.fn.fnameescape(git_root))
 	end
 end
 

@@ -4,7 +4,7 @@
 -- | | | |  __/ (_) | ||  __/\__ \ |_
 -- |_| |_|\___|\___/ \__\___||___/\__|
 --
--- test away without leaving neovim
+-- test as you code, with no context-switching
 
 require('bundles.lsp') -- Ensures rustaceanvim is loaded
 

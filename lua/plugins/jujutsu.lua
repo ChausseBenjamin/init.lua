@@ -7,13 +7,23 @@
 --
 -- git with chops
 
-require('plugins.difftastic')
-vim.pack.add({
-	{ src = GH .. 'yannvanhalewyn/jujutsu.nvim' },
-})
+local loaded = false -- becomes `require('jujutsu-nvim')` once loaded
+local jj = {}
+local function lazy_load()
+	if loaded then return end
+	require('plugins.difftastic')
+	vim.pack.add({
+		{ src = GH .. 'yannvanhalewyn/jujutsu.nvim' },
+	})
 
-local jj = require('jujutsu-nvim')
-vim.keymap.set('n', '<leader>jj', jj.log, { desc = 'JJ Log' })
+	jj = require('jujutsu-nvim')
+	loaded = true
+end
+
+vim.keymap.set('n', '<leader>jj', function()
+	if not loaded then lazy_load() end
+	jj.log()
+end, { desc = 'JJ Log' })
 
 vim.keymap.set('n', '<leader>ji', function()
 	local confirm = vim.fn.confirm('Initialize jujutsu to colocate with git?',

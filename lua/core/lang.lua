@@ -8,38 +8,22 @@
 -- Because I am cursed with the knowlege of french
 
 -- Ensure search (and it's reverse) works even on the wrong kb layout
-vim.api.nvim_command('set langmap+=é/')
-vim.api.nvim_command('set langmap+=É?')
+local langmaps = {
+	'é/', 'É?', "'<", '">', '?^', 'à\\\\',
+	'À|', "è'", 'È"', 'ù`', 'Ù~', '¨{', 'Ç}',
+}
+vim.opt.langmap = table.concat(langmaps)
 
 -- k.ey c.har
 local digraphs = {
-	{ "/e", 'é', },
-	{ "[e", 'ê', },
-	{ "'e", 'è', },
-	{ "[a", 'â', },
-	{ "'a", "à", },
-	{ "[a", 'â', },
-	{ "'a", "à", },
-	{ "]c", 'ç', },
-	{ "[o", 'ô', },
-	{ "'u", 'ù', },
-	{ "/E", 'É', },
-	{ "[E", 'Ê', },
-	{ "'E", 'È', },
-	{ "[A", 'Â', },
-	{ "'A", "À", },
-	{ "[A", 'Â', },
-	{ "'A", "À", },
-	{ "]C", 'Ç', },
-	{ "[O", 'Ô', },
-	{ "'U", 'Ù', },
+	{ "[A", 'Â', }, { "'A", "À", }, { "[A", 'Â', }, { "'A", "À", },
+	{ "[a", 'â', }, { "'a", "à", }, { "[a", 'â', }, { "'a", "à", },
+	{ "/e", 'é', }, { "[e", 'ê', }, { "'e", 'è', },
+	{ "/E", 'É', }, { "[E", 'Ê', }, { "'E", 'È', },
+	{ "]c", 'ç', }, { "[o", 'ô', }, { "'u", 'ù', },
+	{ "]C", 'Ç', }, { "[O", 'Ô', }, { "'U", 'Ù', },
 }
-for _, v in ipairs(digraphs) do
-	vim.cmd.dig(string.format('%s %s',
-		v[1],
-		vim.fn.char2nr(v[2])
-	))
-end
+vim.fn.digraph_setlist(digraphs)
 
 -- Control F since I mostly use Digraphs for F.rench
 -- (Also, <c-k> is harpoon territory)

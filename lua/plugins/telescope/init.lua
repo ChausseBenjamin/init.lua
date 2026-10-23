@@ -21,7 +21,7 @@ local actions = require('telescope.actions')
 require('plugins.telescope.nucleo')
 
 local trim_pad = '  '
-local trim_mark = '/' -- '󰩀/'
+local trim_mark = '…/'
 
 ts.setup({
 	defaults = {

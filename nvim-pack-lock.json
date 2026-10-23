@@ -54,6 +54,10 @@
       "rev": "fc5a5757b99aace86a0b3f0775347b967990225b",
       "src": "git@github.com:yannvanhalewyn/jujutsu.nvim"
     },
+    "markdown-preview.nvim": {
+      "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
+      "src": "git@github.com:iamcco/markdown-preview.nvim"
+    },
     "mini.nvim": {
       "rev": "e3f2349a65143ff062f0b70ee9d68d8ce35c7059",
       "src": "git@github.com:echasnovski/mini.nvim"

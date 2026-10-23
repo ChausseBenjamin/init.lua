@@ -25,7 +25,7 @@ local function notify(msg, level)
 	vim.schedule(function() vim.notify(msg, level) end)
 end
 
-local build = { 'cargo', 'rustc', '--release' }
+local build = { 'cargo', '+stable', 'rustc', '--release' }
 if vim.uv.os_uname().sysname == 'Darwin' then
 	vim.list_extend(build,
 		{ '--', '-C', 'link-arg=-undefined', '-C', 'link-arg=dynamic_lookup' })

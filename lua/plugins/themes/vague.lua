@@ -61,25 +61,29 @@ local plt = {
 }
 -- Custom highlight tweaks
 local rules = {
-	['WinSeparator'] = { fg = plt.blue },
-	['hline.out'] = { bg = plt.dark, fg = plt.lilac },
-	['hline.in'] = { bg = plt.black, fg = plt.lilac },
+	['WinSeparator']           = { fg = plt.blue },
+	['hline.out']              = { bg = plt.dark, fg = plt.lilac },
+	['hline.in']               = { bg = plt.black, fg = plt.lilac },
 
-	['hline.out.mode'] = { fg = plt.black },
-	['hline.out.mode.norm'] = { bg = plt.pale, fg = plt.black },
-	['hline.out.mode.cmd'] = { link = 'hline.out.mode.norm' },
-	['hline.out.mode.insert'] = { bg = plt.yellow },
+	['hline.out.mode']         = { fg = plt.black },
+	['hline.out.mode.norm']    = { bg = plt.pale, fg = plt.black },
+	['hline.out.mode.cmd']     = { link = 'hline.out.mode.norm' },
+	['hline.out.mode.insert']  = { bg = plt.yellow },
 	['hline.out.mode.replace'] = { link = 'hline.out.mode.insert' },
-	['hline.out.mode.vis'] = { bg = plt.coral },
-	['hline.out.mode.term'] = { bg = plt.magenta, fg = plt.lilac },
-	['hline.out.mode.sel'] = { link = 'hline.out.mode.term' },
-	['hline.out.mode.shell'] = { link = 'hline.out.mode.term' },
+	['hline.out.mode.vis']     = { bg = plt.coral },
+	['hline.out.mode.term']    = { bg = plt.magenta, fg = plt.lilac },
+	['hline.out.mode.sel']     = { link = 'hline.out.mode.term' },
+	['hline.out.mode.shell']   = { link = 'hline.out.mode.term' },
 
 	['hline.out.tabs.focused'] = { link = 'hline.out.mode.norm' },
 
-	['hline.diff.added'] = { fg = plt.green },
-	['hline.diff.modified'] = { fg = plt.yellow },
-	['hline.diff.deleted'] = { fg = plt.red },
+	['hline.diff.added']       = { fg = plt.green },
+	['hline.diff.modified']    = { fg = plt.yellow },
+	['hline.diff.deleted']     = { fg = plt.red },
+
+	['@lsp.type.typeAlias']    = { link = '@type' },
+	['@lsp.type.const']        = { link = '@constant' },
+	['@lsp.type.static']       = { link = '@constant' },
 }
 for rule, opts in pairs(rules) do
 	vim.api.nvim_set_hl(0, rule, opts)

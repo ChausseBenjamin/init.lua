@@ -17,6 +17,7 @@ require('plugins.heirline.init')
 require('plugins.treesitter')
 require('plugins.telescope')
 require('plugins.notifier')
+require('plugins.colors')
 
 local ts = require('telescope')
 ts.setup({

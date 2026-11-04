@@ -10,5 +10,9 @@ vim.pack.add({
 	{ src = GH .. 'iamcco/markdown-preview.nvim' }
 })
 
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.wo.foldmethod = 'expr'
+vim.wo.foldlevel = 0
+
 -- Somehow vim.pack.add isn't enough for this one...
 vim.cmd('packadd markdown-preview.nvim')

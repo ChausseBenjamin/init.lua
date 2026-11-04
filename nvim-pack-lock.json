@@ -82,6 +82,10 @@
       "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
       "src": "git@github.com:MunifTanjim/nui.nvim"
     },
+    "nvim-colorizer.lua": {
+      "rev": "72a05f62c52241bc7441c820eb53946f92b2e6a4",
+      "src": "git@github.com:catgoose/nvim-colorizer.lua"
+    },
     "nvim-lspconfig": {
       "rev": "45a3a444b710511c39abca3b60bb6e23a21e3de5",
       "src": "git@github.com:neovim/nvim-lspconfig"
@@ -92,8 +96,7 @@
     },
     "nvim-treesitter": {
       "rev": "cf12346a3414fa1b06af75c79faebe7f76df080a",
-      "src": "git@github.com:nvim-treesitter/nvim-treesitter",
-      "version": "'main'"
+      "src": "git@github.com:nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
       "rev": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187",
@@ -115,6 +118,10 @@
       "rev": "a7129bddc734ae4f0730607083e03dcd05203a95",
       "src": "git@github.com:ChausseBenjamin/rafta.nvim"
     },
+    "remote-ssh.nvim": {
+      "rev": "b0fc5c8452b83a81bdf9bf19db3afacb26e41720",
+      "src": "git@github.com:inhesrom/remote-ssh.nvim"
+    },
     "resizer.nvim": {
       "rev": "c0d2b07b6b610407378f568884beadced7e46f37",
       "src": "git@github.com:ChausseBenjamin/resizer.nvim"
@@ -126,6 +133,10 @@
     "telescope-nucleo-sorter.nvim": {
       "rev": "f02e07195d68f135bc51456c96006c1762d09bb4",
       "src": "git@github.com:AntoineGagne/telescope-nucleo-sorter.nvim"
+    },
+    "telescope-remote-buffer": {
+      "rev": "341bd7abae5f46d08d2af99d24ed05247311207e",
+      "src": "git@github.com:inhesrom/telescope-remote-buffer"
     },
     "telescope-ui-select.nvim": {
       "rev": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2",

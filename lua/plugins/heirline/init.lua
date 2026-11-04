@@ -19,7 +19,7 @@ local mode = require('plugins.heirline.mode')
 local tabs = require('plugins.heirline.tabs')
 
 local padding = { provider = '%=' }
-local location = { provider = ' %l:%c ' }
+local location = { provider = ' %l:%v ' }
 
 vim.o.showtabline = 2 -- always show the tabline
 vim.o.laststatus = 3  -- single status line

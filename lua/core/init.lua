@@ -10,6 +10,7 @@ vim.g.mapleader = ' '
 
 vim.o.number = true
 vim.o.relativenumber = true
+vim.o.termguicolors = true
 
 vim.o.encoding = 'utf-8'
 
@@ -36,7 +37,7 @@ vim.g.loaded_perl_provider = 0
 vim.o.scrolloff = 1
 vim.o.sidescrolloff = 2
 vim.opt.display:append('truncate')
-vim.opt.listchars:append({ extends = '>', precedes = '<' })
+vim.opt.listchars:append('extends:>,precedes:<')
 
 -- ALWAYS start vim from the root of a git repo
 -- (helps keeping harpoons consistent)

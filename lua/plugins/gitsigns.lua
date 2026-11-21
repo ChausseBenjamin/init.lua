@@ -5,7 +5,7 @@
 --  \__, |_|\__|___/_|\__, |_| |_|___/
 --  |___/             |___/
 --
--- To find someone to blame
+-- Find the culprit for that awful code (probably you)
 
 
 vim.pack.add {

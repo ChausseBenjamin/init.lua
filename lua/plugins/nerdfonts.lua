@@ -1,3 +1,11 @@
+--                     _
+--  _ __   ___ _ __ __| |_   _
+-- | '_ \ / _ \ '__/ _` | | | |
+-- | | | |  __/ | | (_| | |_| |
+-- |_| |_|\___|_|  \__,_|\__, |
+--                       |___/
+-- Be free from the online cheatsheet
+
 local loaded = false
 
 local function lazy_load()

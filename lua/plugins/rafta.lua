@@ -4,6 +4,7 @@
 -- | | | (_| |  _| || (_| |
 -- |_|  \__,_|_|  \__\__,_|
 --
+-- Really, another f*cking TODO app?!!
 
 DevPack('ChausseBenjamin/rafta.nvim')
 local rafta = require('rafta')

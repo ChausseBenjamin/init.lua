@@ -4,7 +4,6 @@
 -- | | | | (_| | |  | |_) | (_) | (_) | | | |
 -- |_| |_|\__,_|_|  | .__/ \___/ \___/|_| |_|
 --                  |_|
---
 -- Hook onto files and never let go
 
 local loaded = false

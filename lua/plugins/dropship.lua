@@ -4,7 +4,6 @@
 -- | (_| | | | (_) | |_) \__ \ | | | | |_) |
 --  \__,_|_|  \___/| .__/|___/_| |_|_| .__/
 --                 |_|               |_|
---
 -- Get dropped right back into you projects
 
 local loaded = false

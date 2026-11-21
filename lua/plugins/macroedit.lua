@@ -4,7 +4,7 @@
 -- | | | | | | (_| | (__| | | (_) |  __/ (_| | | |_
 -- |_| |_| |_|\__,_|\___|_|  \___/ \___|\__,_|_|\__|
 --
--- To fix the macro-freeze syndrome
+-- The cure to macro-paralysis
 
 vim.pack.add {
 	{ src = GH .. 'dohsimpson/vim-macroeditor' },

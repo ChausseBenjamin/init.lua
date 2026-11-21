@@ -9,8 +9,8 @@
 
 -- Ensure search (and it's reverse) works even on the wrong kb layout
 local langmaps = {
-	'é/', 'É?', "'<", '">', '?^', 'à\\\\',
-	'À|', "è'", 'È"', 'ù`', 'Ù~', '¨{', 'Ç}',
+	'é/', 'É?', "è'", 'È"',
+	'à\\\\', 'À|', 'ù`', 'Ù~', 'Ç}',
 }
 vim.opt.langmap = table.concat(langmaps)
 

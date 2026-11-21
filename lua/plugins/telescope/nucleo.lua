@@ -71,8 +71,14 @@ local function rev_at(path)
 	return res.code == 0 and vim.trim(res.stdout) or nil
 end
 
+-- The plugin pins mlua 0.9.7, which no longer compiles on recent nightlies:
+-- the never-type fallback change leaves `Chunk::exec`'s `self.call(())?` with
+-- an inferred `!` that does not implement FromLuaMulti. Stable 1.99.1 still
+-- infers `()`, so pin the toolchain for this one build.
+local TOOLCHAIN = '1.99.1'
+
 local function cargo_cmd()
-	local cmd = { 'cargo', 'rustc', '--release' }
+	local cmd = { 'cargo', '+' .. TOOLCHAIN, 'rustc', '--release' }
 	-- A cdylib on macOS needs the symbols resolved at load time by the host.
 	if is_mac then
 		vim.list_extend(cmd,

@@ -9,10 +9,6 @@
       "src": "git@github.com:saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
-    "difftastic.nvim": {
-      "rev": "c39bbe1c60eec06ad7d141bd09bb910fac4d2436",
-      "src": "git@github.com:clabby/difftastic.nvim"
-    },
     "dropship.nvim": {
       "rev": "a76d52433cd316a9989afccf10813f9d9221ea3b",
       "src": "git@github.com:ChausseBenjamin/dropship.nvim"
@@ -34,7 +30,7 @@
       "src": "git@github.com:antonk52/gitignore-grabber.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "fd780920613e541cbdfac41bf711583ed49f9249",
+      "rev": "4bcd99167c265f135886b282baad77afe06206b2",
       "src": "git@github.com:lewis6991/gitsigns.nvim"
     },
     "harpoon": {
@@ -50,17 +46,41 @@
       "rev": "fae936abb5e0345b85c3a03ecf38525b0828b992",
       "src": "git@github.com:rebelot/heirline.nvim"
     },
-    "jujutsu.nvim": {
-      "rev": "fc5a5757b99aace86a0b3f0775347b967990225b",
-      "src": "git@github.com:yannvanhalewyn/jujutsu.nvim"
-    },
     "markdown-preview.nvim": {
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "git@github.com:iamcco/markdown-preview.nvim"
     },
-    "mini.nvim": {
-      "rev": "295af26358628c8ba8f007ff6a7e0aec2f642a31",
-      "src": "git@github.com:echasnovski/mini.nvim"
+    "mini.ai": {
+      "rev": "a4f5648dedf435e6306205135d1babb563b55d28",
+      "src": "git@github.com:nvim-mini/mini.ai"
+    },
+    "mini.align": {
+      "rev": "a7f24f57e68a72fd6c19e442288ab835a9c40cdd",
+      "src": "git@github.com:nvim-mini/mini.align"
+    },
+    "mini.bracketed": {
+      "rev": "2757ab8b893f08a5f2a6f0fb8a56acd581a19d00",
+      "src": "git@github.com:nvim-mini/mini.bracketed"
+    },
+    "mini.icons": {
+      "rev": "eab3e692d796d78ea6ffc978d8a380ff26fcf4e3",
+      "src": "git@github.com:nvim-mini/mini.icons"
+    },
+    "mini.indentscope": {
+      "rev": "b26a8ee619c0f4158dd4df1a8151b236b7d100bc",
+      "src": "git@github.com:nvim-mini/mini.indentscope"
+    },
+    "mini.keymap": {
+      "rev": "296648cbcb1a5d74375879bfa8d1726ff0a44685",
+      "src": "git@github.com:nvim-mini/mini.keymap"
+    },
+    "mini.operators": {
+      "rev": "9e844663fe217bae78e857b7dc59468d8ee6d425",
+      "src": "git@github.com:nvim-mini/mini.operators"
+    },
+    "mini.surround": {
+      "rev": "5357f00aca51a3b43e7775901b1ad9699f8c2678",
+      "src": "git@github.com:nvim-mini/mini.surround"
     },
     "multinput.nvim": {
       "rev": "f2959e1f5f4a64ae0c79c849d8e0a4af42a8e9e0",
@@ -74,20 +94,12 @@
       "rev": "3523adcf9ffaad1911960c5813b0136c1b63a2ec",
       "src": "git@github.com:nvim-neotest/neotest-plenary"
     },
-    "nerdy.nvim": {
-      "rev": "f6ba335405d3070f90aea5e35eca4a08dec3851f",
-      "src": "git@github.com:ChausseBenjamin/nerdy.nvim"
-    },
-    "nui.nvim": {
-      "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
-      "src": "git@github.com:MunifTanjim/nui.nvim"
-    },
     "nvim-colorizer.lua": {
       "rev": "72a05f62c52241bc7441c820eb53946f92b2e6a4",
       "src": "git@github.com:catgoose/nvim-colorizer.lua"
     },
     "nvim-lspconfig": {
-      "rev": "45a3a444b710511c39abca3b60bb6e23a21e3de5",
+      "rev": "adfbb74472f6c231b651b650a89f414c2680fb31",
       "src": "git@github.com:neovim/nvim-lspconfig"
     },
     "nvim-nio": {
@@ -95,8 +107,9 @@
       "src": "git@github.com:nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "cf12346a3414fa1b06af75c79faebe7f76df080a",
-      "src": "git@github.com:nvim-treesitter/nvim-treesitter"
+      "rev": "0195cd62fa89950f34c0e0d648ea7897ab85d4d3",
+      "src": "git@github.com:nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
     },
     "nvim-treesitter-textobjects": {
       "rev": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187",
@@ -127,7 +140,7 @@
       "src": "git@github.com:ChausseBenjamin/resizer.nvim"
     },
     "rustaceanvim": {
-      "rev": "f2f0c1231a5b019dbc1fd6dafac1751c878925a3",
+      "rev": "9c5c1aa055b33aa17d4f113724b1e5c4f1f77a1e",
       "src": "git@github.com:mrcjkb/rustaceanvim"
     },
     "telescope-nucleo-sorter.nvim": {
@@ -177,10 +190,6 @@
     "vim-rhubarb": {
       "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",
       "src": "git@github.com:tpope/vim-rhubarb"
-    },
-    "vim-sensible": {
-      "rev": "0ce2d843d6f588bb0c8c7eec6449171615dc56d9",
-      "src": "git@github.com:tpope/vim-sensible"
     },
     "vim-speeddating": {
       "rev": "c17eb01ebf5aaf766c53bab1f6592710e5ffb796",
